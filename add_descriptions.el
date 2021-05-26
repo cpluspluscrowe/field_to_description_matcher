@@ -35,6 +35,13 @@
   "map all keys to a corresponding description"
   (-map (-partial #'add-hash-value descriptions ht) keys))
 
+(defun print-key-values (kds) 
+  "Print out each key and description in a csv format"
+  (if (eq (length kds) 0) nil           ; returns nil each time
+    (progn (message "%s|%s\n" (nth 0 (car kds)) 
+                    (nth 1 (car kds))) 
+           (print-key-values (cdr kds)))))
+
 (setq fields-raw (f-read-text "fields.txt" 'utf-8))
 (setq fields (butlast (split-string fields-raw "\n")))
 
@@ -44,12 +51,5 @@
 (setq final (make-hash-table :test #'equal))
 (fill-hash-table fields)
 (setq key-descriptions (get-key-descriptions (hash-table-keys final) descriptions final))
-
-(defun print-key-values (kds) 
-  "Print out each key and description in a csv format"
-  (if (eq (length kds) 0) nil           ; returns nil each time
-    (progn (message "%s|%s\n" (nth 0 (car kds)) 
-                    (nth 1 (car kds))) 
-           (print-key-values (cdr kds)))))
 
 (print-key-values key-descriptions)
