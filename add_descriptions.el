@@ -1,4 +1,3 @@
-
 (defun fill-hash-table (fields) 
   "Add all fields as keys in the hash-table"
                                         ; base case
@@ -19,20 +18,21 @@
         (car keys) 
       (find-matching-key description (cdr keys)))))
 
-(defun find-description-for-key (key descriptions) 
+(defun find-description-for-key (key descriptions)
+  "find matching description for a key"
   (if (eq (length descriptions) 0) nil (if (contains-string key (car descriptions)) 
                                            (car descriptions) 
                                          (find-description-for-key key (cdr descriptions)))))
 
-
-(defun add-hash-value (descriptions ht key) 
+(defun add-hash-value (descriptions ht key)
+  "get the description that matches a key"
   (let ((matching-description (find-description-for-key key descriptions))) 
     (if matching-description (progn (puthash key matching-description ht) 
                                     (list key matching-description)) 
       (list key nil))))
 
-
-(defun get-key-descriptions (keys descriptions ht) 
+(defun get-key-descriptions (keys descriptions ht)
+  "map all keys to a corresponding description"
   (-map (-partial #'add-hash-value descriptions ht) keys))
 
 (setq fields-raw (f-read-text "fields.txt" 'utf-8))

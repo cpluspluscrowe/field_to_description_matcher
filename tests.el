@@ -19,10 +19,7 @@
 
 (should (equal (find-description-for-key "who" (list "who" "what")) "who"))
 (should (equal (find-description-for-key "what" (list "who" "what")) "what"))
-
-
-(setq test-hash (make-hash-table :test #'equal))
-                                        ;(hash-table-values test-hash)
+(setq test-hash (make-hash-table :test #'equal))                                        ;(hash-table-values test-hash)
 (setq key "foo")
 (puthash key t test-hash)
 (setq descriptions (list "foo2" "bar2"))
